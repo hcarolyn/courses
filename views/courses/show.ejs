@@ -1,0 +1,97 @@
+<% layout('layouts/boilerplate') %>
+
+    <div>
+
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h1 class="card-name">
+                            <%= course.courseName%>
+                        </h1>
+                        <p class="card-text">
+                            <%= course.subject%>
+                        </p>
+                    </div>
+                    <% if (user) { %> 
+                    <div class="card-body">
+                        <a class="card-link btn btn-info" href="/courses/<%=course._id%>/edit">Edit</a>
+                        <form class="d-inline" action="/courses/<%=course._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                    <% } %> 
+                </div>
+
+                <% if (user) { %> 
+                <h2>Add Review</h2>
+                <form action="/courses/<%=course._id%>/reviews" method="POST" class="mb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="difficulty">Difficulty</label>
+                        <input class="form-range" type="range" min="1" max="5" name="review[difficulty]"
+                            id="difficulty">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="body">Review</label>
+                        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="4"
+                            required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <select name="review[grade]" id="grade" class="form-select" aria-label="Grade">
+                            <option selected>Grade</option>
+                            <option value="A+">A+</option>
+                            <option value="A">A</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B">B</option>
+                            <option value="B-">B-</option>
+                            <option value="C+">C+</option>
+                            <option value="C">C</option>
+                            <option value="C-">C-</option>
+                            <option value="D">D</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="professor">Professor</label>
+                        <textarea class="form-control" name="review[professor]" id="professor" cols="30" rows="1"
+                            required></textarea>
+                    </div>
+                    <button class="btn btn-success">Submit</button>
+                </form>
+                <% } else { %>
+                    <h3>Please login or register to add a review</h3>
+                    <div class="mb-3">
+                        <a href="/login" class="nav-link">Login</a>
+                        <a href="/register" class="nav-link">Register</a>
+                    </div>
+                    
+                <% } %> 
+
+            </div>
+            <div class="col-6">
+                <% for (let c of course.reviews) { %>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>
+                            <h4 class="card-text"></h4>
+                            <p> Review: <%= c.body %></p>
+                            <p> Difficulty: <% c.difficulty %></p>
+                            <p> Grade: <%= c.grade %></p>
+                            <p> Professor: <% c.professor %></p>
+                           <% if (user && c.author && c.author.equals(user._id)) { %> 
+                            <form action="/courses/<%=course._id%>/reviews/<%=c._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                            <% } %> 
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+
+        <div>
+            <a href="/courses">All Courses</a>
+        </div>
+    </div>

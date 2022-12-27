@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate') %> 
+
+<div class="row">
+    <h1 class="text-center">New Course</h1>
+    <div class="col-6 offset-3">
+        <form action="/courses" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="courseName">Name</label>
+                <input class="form-control" type="text" id="courseName" name="course[courseName]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="subject">Subject</label>
+                <input class="form-control" type="text" id="subject" name="course[subject]">
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Add Course</button>
+            </div>
+        </form>
+        <a href="/courses">All Courses</a>
+    </div>
+</div>

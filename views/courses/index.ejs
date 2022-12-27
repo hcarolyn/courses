@@ -1,0 +1,26 @@
+<% layout('layouts/boilerplate') %>
+
+    <h1>All Courses</h1>
+    <ul>
+        <a href="/courses/new">Add Course</a>
+    </ul>
+
+    <ul>
+        <% for (let course of courses) { %>
+            <div class="card" mb-3>
+                <div class="row">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= course.courseName %>
+                        </h5>
+                        <p class="card-text">
+                            <%= course.subject %>
+                        </p>
+                        </p>
+                        <a class="btn btn-primary" href="/courses/<%=course._id%>">View <%=course.courseName%></a>
+                    </div>
+                </div>
+            </div>
+
+            <% } %>
+    </ul>
